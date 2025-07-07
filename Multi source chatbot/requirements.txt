@@ -1,0 +1,17 @@
+# Core LangChain and ecosystem
+langchain
+langchain-community
+langchain-openai
+openai
+tiktoken
+faiss-cpu
+python-dotenv
+streamlit
+PyMuPDF  # for PDF support via fitz
+pandas   # for CSV support
+yt_dlp   # for YouTube loader
+beautifulsoup4  # for HTML parsing in web scraping
+html2text  # optional, for better HTML to text conversion
+requests
+unstructured  # (for advanced PDF parsing, if needed)
+certifi # For safety and performance
