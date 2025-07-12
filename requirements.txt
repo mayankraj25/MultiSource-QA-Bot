@@ -5,7 +5,6 @@ langchain-openai
 openai
 tiktoken
 faiss-cpu
-python-dotenv
 streamlit
 PyMuPDF  # for PDF support via fitz
 pandas   # for CSV support
@@ -15,3 +14,4 @@ html2text  # optional, for better HTML to text conversion
 requests
 unstructured  # (for advanced PDF parsing, if needed)
 certifi # For safety and performance
+youtube-transcript-api
