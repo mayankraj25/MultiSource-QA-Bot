@@ -22,8 +22,8 @@ def load_all_documents(sources: dict):
             all_docs.extend(load_webpage(url))
     return all_docs
 
-def build_vectorstore(docs):
+def build_vectorstore(docs,api_key: str):
     text_splitter=RecursiveCharacterTextSplitter(chunk_size=1000,chunk_overlap=200)
     chunks=text_splitter.split_documents(docs)
-    embeddings=OpenAIEmbeddings()
+    embeddings=OpenAIEmbeddings(openai_api_key=api_key)
     return FAISS.from_documents(chunks,embeddings),chunks
