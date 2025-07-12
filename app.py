@@ -51,7 +51,7 @@ if st.button("Process Sources"):
             os.environ["OPENAI_API_KEY"] = user_api_key  # Set key temporarily for use
             documents = load_all_documents(sources)
             vectorstore, chunks = build_vectorstore(documents,user_api_key)
-            qa_chain = build_qa_chain(vectorstore)
+            qa_chain = build_qa_chain(vectorstore,user_api_key)
             st.session_state.qa_chain = qa_chain
             st.success("Documents processed. Start chatting!")
 
