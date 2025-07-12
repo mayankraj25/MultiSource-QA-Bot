@@ -4,11 +4,11 @@ import os
 import tempfile
 from main import load_all_documents, build_vectorstore
 from chains.qa_chain import build_qa_chain
-from dotenv import load_dotenv
 
-load_dotenv()
 
 st.set_page_config(page_title="Multi-Source Chatbot", layout="wide")
+st.sidebar.title("🔐 API Key Setup")
+user_api_key = st.sidebar.text_input("Enter your OpenAI API Key", type="password")
 st.title("🧠 Chat with Multiple Sources")
 
 # Upload PDF and CSV files
@@ -44,22 +44,30 @@ sources = {
 
 # Handle document processing
 if st.button("Process Sources"):
-    with st.spinner("Loading and processing documents..."):
-        documents = load_all_documents(sources)
-        vectorstore, chunks = build_vectorstore(documents)
-        qa_chain = build_qa_chain(vectorstore)
-        st.session_state.qa_chain = qa_chain
-        st.success("Documents processed. Start chatting!")
+    if not user_api_key:
+        st.warning("Please enter your OpenAI API key in the sidebar.")
+    else:
+        with st.spinner("Loading and processing documents..."):
+            os.environ["OPENAI_API_KEY"] = user_api_key  # Set key temporarily for use
+            documents = load_all_documents(sources)
+            vectorstore, chunks = build_vectorstore(documents)
+            qa_chain = build_qa_chain(vectorstore)
+            st.session_state.qa_chain = qa_chain
+            st.success("Documents processed. Start chatting!")
 
 # Chat Interface
 if "qa_chain" in st.session_state:
     query = st.text_input("Ask a question:")
     if query:
-        with st.spinner("Thinking..."):
-            response = st.session_state.qa_chain.invoke({"query": query})
-            st.write("### 💬 Answer:", response["result"])
+        if not user_api_key:
+            st.warning("Please enter your OpenAI API key in the sidebar.")
+        else:
+            os.environ["OPENAI_API_KEY"] = user_api_key  # Re-assert if needed
+            with st.spinner("Thinking..."):
+                response = st.session_state.qa_chain.invoke({"query": query})
+                st.write("### 💬 Answer:", response["result"])
 
-            with st.expander("📚 Source Documents"):
-                for i, doc in enumerate(response["source_documents"]):
-                    st.markdown(f"**Document {i+1}:**")
-                    st.write(doc.page_content[:500])  # Preview first 500 characters
+                with st.expander("📚 Source Documents"):
+                    for i, doc in enumerate(response["source_documents"]):
+                        st.markdown(f"**Document {i+1}:**")
+                        st.write(doc.page_content[:500])  # Preview first 500 characters
