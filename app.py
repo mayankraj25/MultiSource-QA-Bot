@@ -4,6 +4,7 @@ import os
 import tempfile
 from main import load_all_documents, build_vectorstore
 from chains.qa_chain import build_qa_chain
+from youtube_transcript_api import YouTubeTranscriptApi
 
 
 st.set_page_config(page_title="Multi-Source Chatbot", layout="wide")
