@@ -71,4 +71,4 @@ if "qa_chain" in st.session_state:
                 with st.expander("📚 Source Documents"):
                     for i, doc in enumerate(response["source_documents"]):
                         st.markdown(f"**Document {i+1}:**")
-                        st.write(doc.page_content[:500])  # Preview first 500 characters
+                        st.write(doc.page_content[:500])  
