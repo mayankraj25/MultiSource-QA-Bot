@@ -63,7 +63,7 @@ if "qa_chain" in st.session_state:
         if not user_api_key:
             st.warning("Please enter your OpenAI API key in the sidebar.")
         else:
-            os.environ["OPENAI_API_KEY"] = user_api_key  # Re-assert if needed
+            os.environ["OPENAI_API_KEY"] = user_api_key  
             with st.spinner("Thinking..."):
                 response = st.session_state.qa_chain.invoke({"query": query})
                 st.write("### 💬 Answer:", response["result"])
