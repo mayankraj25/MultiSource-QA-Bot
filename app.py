@@ -49,7 +49,7 @@ if st.button("Process Sources"):
         st.warning("Please enter your OpenAI API key in the sidebar.")
     else:
         with st.spinner("Loading and processing documents..."):
-            os.environ["OPENAI_API_KEY"] = user_api_key  # Set key temporarily for use
+            os.environ["OPENAI_API_KEY"] = user_api_key  
             documents = load_all_documents(sources)
             vectorstore, chunks = build_vectorstore(documents,user_api_key)
             qa_chain = build_qa_chain(vectorstore,user_api_key)
